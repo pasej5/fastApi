@@ -8,6 +8,8 @@ class Post(BaseModel):
     title: str
     content: str
     published: bool = True
+    
+my_posts = [{"title": "Title of post 1", "content": "Content of post 1", "id": 1}, {"title": "Favourite foods", "content": "I like pizza", "id": 2}]
 
 @app.get("/")
 def root():
@@ -17,7 +19,7 @@ def root():
 def get_posts():
     return {"data": "This is your posts"}
 
-@app.post("/createposts")
-def create_posts(payload: dict = Body(...)):
-    print(payload)
-    return {"new_post": f"title {payload['title']} content: {payload['content']}"}
+@app.post("/posts")
+def create_posts(post: Post):
+    print(post.content)
+    return {"data": "new post"}
