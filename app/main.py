@@ -13,7 +13,13 @@ class Post(BaseModel):
     published: bool = True
     
 try:
-    conn = psycopg2.connect(host='localhost', database='fastapi', user='postgress', password='password123', cursor_factory='RealDictCursor')
+    conn = psycopg2.connect(host='localhost', database='fastapi', user='postgress', password='password123', cursor_factory=RealDictCursor)
+    cursor = conn.cursor()
+    print("Database connection was successful")
+except Exception as error:
+    print("Connecting to database failed!")
+    print("The Error was: ", error)
+    
     
 my_posts = [{"title": "Title of post 1", "content": "Content of post 1", "id": 1}, {"title": "My Favourite foods", "content": "I like pizza", "id": 2}]
 
