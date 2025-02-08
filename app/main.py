@@ -11,9 +11,9 @@ class Post(BaseModel):
     title: str
     content: str
     published: bool = True
-    
+ 
 try:
-    conn = psycopg2.connect(host='localhost', database='fastapi', user='postgress', password='password123', cursor_factory=RealDictCursor)
+    conn = psycopg2.connect(host='localhost', database='fastapi_social', user='postgres', password='Amazon', cursor_factory=RealDictCursor)
     cursor = conn.cursor()
     print("Database connection was successful")
 except Exception as error:
