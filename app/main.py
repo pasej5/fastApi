@@ -46,6 +46,8 @@ def root():
 
 @app.get("/posts")
 def get_posts():
+    posts = cursor.execute("""SELECT * FROM posts  """)
+    print(posts)
     return {"data": my_posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
