@@ -13,17 +13,29 @@ class Post(BaseModel):
     content: str
     published: bool = True
     
-while True:
     
-    try:
-        conn = psycopg2.connect(host='localhost', database='fastapi_social', user='postgres', password='Amazon1@', cursor_factory=RealDictCursor)
-        cursor = conn.cursor()
-        print("Database connection was successful")
-        break
-    except Exception as error:
-        print("Connecting to database failed!")
-        print("The Error was: ", error)
-        time.sleep(2)
+try:
+    conn = psycopg2.connect(host='localhost', port=5432, database='fastapi_social', user='postgres', password='password123', cursor_factory=RealDictCursor)
+    cursor = conn.cursor()
+    print("Database connection was successful")
+
+    # Execute your query
+    cursor.execute("""SELECT * FROM posts """)
+    posts = cursor.fetchall()
+    print(posts)
+
+except Exception as error:
+    print("Connecting to database or executing query failed!")
+    print("The Error was: ", error)
+    if conn:
+        conn.rollback()  # Rollback the transaction on error
+
+finally:
+    if cursor:
+        cursor.close()  # Close the cursor
+    if conn:
+        conn.close()  # Close the connection
+
     
     
 my_posts = [{"title": "Title of post 1", "content": "Content of post 1", "id": 1}, {"title": "My Favourite foods", "content": "I like pizza", "id": 2}]
@@ -44,11 +56,13 @@ def find_index_post(id):
 def root():
     return {"message": "Welcome to my Api Love you guys"}
 
+
 @app.get("/posts")
 def get_posts():
-    posts = cursor.execute("""SELECT * FROM posts  """)
+    cursor.execute("""SELECT * FROM posts """)
+    posts = cursor.fetchall()
     print(posts)
-    return {"data": my_posts}
+    return {"data": posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(post: Post):
