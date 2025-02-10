@@ -6,19 +6,12 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import time
 from . import models
-from .database import engine, SessionLocal
+from .database import engine, get_db
 from sqlalchemy.orm import Session
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close
 
 class Post(BaseModel):
     title: str
@@ -59,20 +52,27 @@ def root():
 
 @app.get("/sqlalchemy")
 def test_popsts(db: Session = Depends(get_db)):
-    return {"status": "success"}
+    posts = db.query(models.Post).all()
+    return {"data": posts}
     
 
 
 @app.get("/posts")
-def get_posts():
-    cursor.execute("""SELECT * FROM posts """)
-    posts = cursor.fetchall()
+def get_posts(db: Session = Depends(get_db)):
+    posts = db.query(models.Post).all()    
+    # cursor.execute("""SELECT * FROM posts """)
+    # posts = cursor.fetchall()
     return {"data": posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
-def create_posts(post: Post):
-    cursor.execute("""INSERT INTO posts (title, content) VALUES (%s, %s) RETURNING *""", (posts.title, posts.content))
-    new_post = cursor.fetchone()
+def create_posts(post: Post, db: Session = Depends(get_db)):
+    new_post = models.Post(title=post.title, content=post.content, published=post.published)
+    
+    # cursor.execute("""INSERT INTO posts (title, content) VALUES (%s, %s) RETURNING *""", (posts.title, posts.content))
+    # new_post = cursor.fetchone()
+    db.add(new_post)
+    db.commit()
+    db.refresh(new_post)
     return {"data": new_post}
 
 @app.get("/posts/{id}")
