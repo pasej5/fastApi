@@ -22,21 +22,10 @@ try:
     # Execute your query
     cursor.execute("""SELECT * FROM posts """)
     posts = cursor.fetchall()
-    print(posts)
 
 except Exception as error:
     print("Connecting to database or executing query failed!")
-    print("The Error was: ", error)
-    if conn:
-        conn.rollback()  # Rollback the transaction on error
-
-finally:
-    if cursor:
-        cursor.close()  # Close the cursor
-    if conn:
-        conn.close()  # Close the connection
-
-    
+    print("The Error was: ", error)    
     
 my_posts = [{"title": "Title of post 1", "content": "Content of post 1", "id": 1}, {"title": "My Favourite foods", "content": "I like pizza", "id": 2}]
 
@@ -61,15 +50,13 @@ def root():
 def get_posts():
     cursor.execute("""SELECT * FROM posts """)
     posts = cursor.fetchall()
-    print(posts)
     return {"data": posts}
 
 @app.post("/posts", status_code=status.HTTP_201_CREATED)
 def create_posts(post: Post):
-    post_dict = post.dict()
-    post_dict['id'] = randrange(0, 1000000)
-    my_posts.append(post_dict)
-    return {"data": post_dict}
+    cursor.execute("""INSERT INTO posts (title, content) VALUES (%s, %s) RETURNING *""", (posts.title, posts.content))
+    new_post = cursor.fetchone()
+    return {"data": new_post}
 
 @app.get("/posts/{id}")
 def get_post(id: int, response: Response):
