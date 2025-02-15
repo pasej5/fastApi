@@ -1,3 +1,4 @@
+from typing import Optional, List
 from fastapi import FastAPI, Response, status, HTTPException, Depends
 from fastapi.params import Body
 from random import randrange
@@ -45,7 +46,7 @@ def root():
     return {"message": "Welcome to my Api Love you guys"}    
 
 
-@app.get("/posts")
+@app.get("/posts", response_model=List[schemas.Post])
 def get_posts(db: Session = Depends(get_db)):
     posts = db.query(models.Post).all()    
     # cursor.execute("""SELECT * FROM posts """)
@@ -63,7 +64,7 @@ def create_posts(post: schemas.PostCreate, db: Session = Depends(get_db)):
     db.refresh(new_post)
     return new_post
 
-@app.get("/posts/{id}")
+@app.get("/posts/{id}", response_model=schemas.Post)
 def get_post(id: int, db: Session = Depends(get_db)):
     post = db.query(models.Post).filter(models.Post.id == id).first()
     if not post:
@@ -89,7 +90,7 @@ def delete_post(id: int, db: Session = Depends(get_db)):
     # we send this because we dont want to send any data back since we deleted the code Response(status_code=status.HTTP_204_NO_CONTENT)
     
 
-@app.put("/posts/{id}")
+@app.put("/posts/{id}", response_model=schemas.Post)
 def update_post(id: int, post: schemas.PostCreate, db: Session = Depends(get_db)):
     post_query = db.query(models.Post).filter(models.Post.id == id)
     post = post_query.first()
