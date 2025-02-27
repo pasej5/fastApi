@@ -3,6 +3,16 @@ import time
 from . import models
 from .database import engine
 from .routers import post, user, auth
+from pydantic_settings import BaseSettings
+
+
+class Settings(BaseSettings):
+    database_password: str = "localhost"
+    database_name: str = "postgres"
+    secret_key: str = "hy6g87jgf40j"
+settings = Settings()
+
+print(settings.database_password)
 
 models.Base.metadata.create_all(bind=engine)
 
