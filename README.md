@@ -16,7 +16,7 @@ A fully featured FastAPI-based social media backend with authentication, CRUD op
 
 - **PostgreSQL** as the primary database
 - **SQLAlchemy ORM** for database interaction
-- **Alembic** for incremental database migrations
+- **Alembic** for incremental database migrations, this helps in tracking changes on Git. I used this so that i wont have to drop table all the time in my database so this tool will Automatically pull database models and generate the proper ones
 - **SQL Fundamentals** (Foreign keys, table constraints, relationships)
 
 ### Testing & Debugging
@@ -63,7 +63,7 @@ pip install -r requirements.txt
 
 ### 3. Set Up Environment Variables
 
-Create a `.env` file in the project and make sure you have the following for the app to run smoothly 
+Create a `.env` file in the project and make sure you have the following for the app to run smoothly
 annotated-types==0.7.0
 anyio==4.6.2.post1
 bcrypt==4.2.1
@@ -109,13 +109,14 @@ uvicorn==0.32.0
 uvloop==0.21.0
 watchfiles==0.24.0
 websockets==13.1
-```
+
+````
 
 ### 4. Apply Database Migrations
 
 ```sh
 alembic upgrade head
-```
+````
 
 ### 5. Run the Application
 
