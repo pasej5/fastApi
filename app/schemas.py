@@ -27,6 +27,10 @@ class Post(PostBase):
     class Config:
         orm_attributes = True
         
+class PostOut(PostBase):
+    Post: Post
+    votes: int
+        
 class UserCreate(BaseModel):
     email: EmailStr
     password: str
