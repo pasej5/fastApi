@@ -16,4 +16,4 @@ app.include_router(auth.router)
 
 @app.get("/")
 def root():
-    return {"message": "API built with love 'https://jmatsika.com/' "}
+    return {"message": "API built with love ❤️❤️ 'https://jmatsika.com/'"}
