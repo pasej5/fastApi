@@ -1,5 +1,5 @@
 import pytest
-from app.calculations import add, subtract,multiply, devide
+from app.calculations import add, subtract,multiply, devide, BankAccount
 
 
 @pytest.mark.parametrize("num1, num2, expected", [
@@ -19,4 +19,11 @@ def test_multiply():
     
 def test_devide():
     assert devide(8, 4) == 2
+    
+    
+def test_bank_set_initial_amount():
+    bank_account = BankAccount(50)
+    assert bank_account.balance == 50
+    
+   
     
