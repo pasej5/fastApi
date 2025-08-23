@@ -50,13 +50,14 @@ async def root():
         </style>
     </head>
     <body>
-        <h1>Welcome to Our API!</h1>
+        <h1>Welcome to My API!</h1>
         <p>API built with love ❤️❤️</p>
         <p>Version: <strong>1.0.0</strong></p>
         <p>For full documentation, visit: <a href="https://jmatsika.com/" class="link">https://jmatsika.com/</a></p>
+        <p>Github link: <a href="https://github.com/pasej5/fastApi" class="link">https://github.com/pasej5/fastApi</a></p>
         <p>This API allows you to interact with various features like Posts, Users, and Authentication.</p>
         <div class="footer">
-            <p>API Server is running at <strong>{{server_time}}</strong></p>
+            <p><strong></strong></p>
         </div>
     </body>
     </html>
