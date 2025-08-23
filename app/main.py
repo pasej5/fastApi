@@ -60,15 +60,15 @@ async def root():
         <div class="instructions">
             <h2>How to Use the API</h2>
             <ol>
-                <li><strong>Create a user</strong></li>
-                <li><strong>Login</strong> → Use the <code>/login</code> endpoint to get your access token.</li>
-                <li><strong>Authorize</strong> → Click the "Authorize" button in Swagger UI and paste your token.</li>
+                <li><strong>Create a user here: <a href="https://fastsocial.online/docs" class="link">https://fastsocial.online/docs</a></strong></li>
+                <li><strong>Login</strong></li>
+                <li><strong>Authorize</strong> → Click the "Authorize" button in Swagger UI</li>
                 <li>Now you can <strong>Create, Read, Update, Delete</strong> posts.</li>
             </ol>
             <p><em>Note:</em> You must be logged in to create, update, or delete. Guests can only view.</p>
         </div>
         <div class="footer">
-            <p>API Developer: Jealous Matsikachando</strong></p>
+            <p>API Developer: Jealous Matsikachando : <a href="https://jmatsika.com/" class="link">https://jmatsika.com/</a></strong></p>
         </div>
     </body>
     </html>
