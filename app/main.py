@@ -49,7 +49,7 @@ async def root():
         </style>
     </head>
     <body>
-        <h1> 🚀 Welcome to My API!</h1>
+        <h1><p>This project highlights my journey as a backend developer, focusing on building practical and secure backend solutions.</p></h1>
         <p>Connecting ideas, people, and data 🌍, Simple, powerful, and developer-friendly 🚀</p>
         
         <p>For full documentation, visit: 
